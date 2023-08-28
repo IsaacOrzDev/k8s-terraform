@@ -1,0 +1,18 @@
+variable "ecr_name" {
+  type = list(string)
+}
+
+variable "image_mutability" {
+  type    = string
+  default = "IMMUTABLE"
+}
+
+variable "encrypt_type" {
+  type    = string
+  default = "AES256"
+}
+
+variable "region" {
+  type = string
+}
+
