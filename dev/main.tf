@@ -18,10 +18,13 @@ module "ecr-repo" {
   region   = var.region
 }
 
-output "erc_name" {
-  value = module.ecr-repo.erc_name
+output "ecr-repo" {
+  value = module.ecr-repo
 }
 
-output "erc_arn" {
-  value = module.ecr-repo.erc_arn
+module "k8s-config" {
+  source = "../modules/k8s"
+
+  namespace = "demo-system"
+  context   = "docker-desktop"
 }
