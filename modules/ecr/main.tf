@@ -5,11 +5,11 @@ terraform {
       version = "~> 3.0"
     }
   }
-
 }
 
 provider "aws" {
-  region = var.region
+  region  = var.region
+  profile = var.profile
 }
 
 resource "aws_ecr_repository" "ecr" {
