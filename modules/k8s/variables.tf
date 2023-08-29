@@ -4,5 +4,5 @@ variable "namespace" {
 
 variable "context" {
   type    = string
-  default = null
+  default = "docker-desktop"
 }

@@ -2,6 +2,7 @@ module "ecr-repo" {
   source   = "../modules/ecr"
   ecr_name = var.ecr_name
   region   = var.region
+  profile  = var.profile
 }
 
 output "ecr-repo" {
