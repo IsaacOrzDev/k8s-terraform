@@ -4,21 +4,21 @@ resource "kubernetes_deployment" "deployment" {
 
   metadata {
     namespace = var.namespace
-    name      = each.key
+    name      = "${each.key}-deployment"
   }
 
   spec {
     replicas = 1
     selector {
       match_labels = {
-        app = "${each.key}"
+        app = "${each.key}-deployment"
       }
     }
 
     template {
       metadata {
         labels = {
-          app = "${each.key}"
+          app = "${each.key}-deployment"
         }
       }
 

@@ -4,7 +4,7 @@ variable "namespace" {
 
 variable "context" {
   type    = string
-  default = "docker-desktop"
+  default = null
 }
 
 variable "registry_server" {
@@ -17,6 +17,7 @@ variable "registry_password" {
 
 variable "deployments" {
   type = map(object({
+
     containers = map(object({
       resources = optional(object({
         cpu    = list(string)
@@ -26,6 +27,9 @@ variable "deployments" {
       image_pull_policy = optional(string)
       port              = list(number)
       env_variables     = optional(map(string))
+    }))
+    service = optional(object({
+      port = number
     }))
   }))
 }

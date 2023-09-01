@@ -1,6 +1,6 @@
 module "ecr-repo" {
   source   = "../modules/ecr"
-  ecr_name = var.ecr_name
+  ecr_name = ["custom-mqtt-server"]
   region   = var.region
   profile  = var.profile
 }
@@ -13,7 +13,7 @@ module "k8s-config" {
   source = "../modules/k8s"
 
   namespace = "demo-system"
-  context   = "docker-desktop"
+  context   = "minikube"
 
   registry_server   = var.registry_server
   registry_password = var.registry_password
@@ -25,6 +25,17 @@ module "k8s-config" {
           image = "${var.registry_server}/custom-mqtt-server"
           port  = [1883]
         }
+      }
+    }
+    "nginx" = {
+      containers = {
+        "nginx" = {
+          image = "nginx"
+          port  = [80]
+        }
+      }
+      service = {
+        port = 80
       }
     }
   }
