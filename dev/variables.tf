@@ -11,3 +11,11 @@ variable "profile" {
   type    = string
   default = null
 }
+
+variable "registry_server" {
+  type = string
+}
+
+variable "registry_password" {
+  type = string
+}

@@ -14,4 +14,18 @@ module "k8s-config" {
 
   namespace = "demo-system"
   context   = "docker-desktop"
+
+  registry_server   = var.registry_server
+  registry_password = var.registry_password
+
+  deployments = {
+    "mqtt-server" = {
+      containers = {
+        "mqtt-server" = {
+          image = "${var.registry_server}/custom-mqtt-server"
+          port  = [1883]
+        }
+      }
+    }
+  }
 }

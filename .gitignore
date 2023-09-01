@@ -3,3 +3,4 @@ terraform.tfstate.backup
 terraform.tfstate
 .terraform
 variables.auto.tfvars
+.terraform.tfstate.lock.info
