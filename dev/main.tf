@@ -23,7 +23,7 @@ module "k8s-config" {
       containers = {
         "mqtt-server" = {
           image = "${var.registry_server}/custom-mqtt-server"
-          port  = [1883]
+          port  = 1883
         }
       }
     }
@@ -31,12 +31,20 @@ module "k8s-config" {
       containers = {
         "nginx" = {
           image = "nginx"
-          port  = [80]
+          port  = 80
         }
       }
       service = {
-        port = 80
+        port = [80]
       }
     }
+  }
+
+  ingress = {
+    name = "demo-system"
+    paths = [{
+      service = "nginx"
+      port    = 80
+    }]
   }
 }

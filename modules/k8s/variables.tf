@@ -25,11 +25,26 @@ variable "deployments" {
       }))
       image             = string
       image_pull_policy = optional(string)
-      port              = list(number)
+      port              = number
+      port_protocol     = optional(string)
       env_variables     = optional(map(string))
     }))
     service = optional(object({
-      port = number
+      port          = list(number)
+      port_protocol = optional(string)
     }))
   }))
+}
+
+variable "ingress" {
+  type = object({
+    name = string
+    paths = list(object({
+      path    = optional(string)
+      service = string
+      port    = number
+    }))
+  })
+
+  default = null
 }

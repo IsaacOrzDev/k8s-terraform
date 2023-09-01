@@ -33,8 +33,8 @@ resource "kubernetes_deployment" "deployment" {
             image_pull_policy = try(container.image_pull_policy, "Always")
 
             port {
-              container_port = container.value.port[0]
-              protocol       = try(container.value.port[1], "TCP")
+              container_port = container.value.port
+              protocol       = try(container.value.port_protocol, "TCP")
             }
 
             dynamic "env" {

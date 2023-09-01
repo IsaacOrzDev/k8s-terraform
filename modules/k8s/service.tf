@@ -13,9 +13,9 @@ resource "kubernetes_service" "service" {
 
     port {
       name        = "http"
-      protocol    = "TCP"
-      port        = 80
-      target_port = each.value.service.port
+      protocol    = try(each.value.service.port_protocol, "TCP")
+      port        = try(each.value.service.port[1], 80)
+      target_port = each.value.service.port[0]
     }
   }
 
