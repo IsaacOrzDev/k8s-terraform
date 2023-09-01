@@ -13,5 +13,16 @@ variable "registry_server" {
 }
 
 variable "registry_password" {
-  type = string
+  type      = string
+  sensitive = true
+}
+
+variable "mqtt_username" {
+  type      = string
+  sensitive = true
+}
+
+variable "mqtt_password" {
+  type      = string
+  sensitive = true
 }

@@ -38,9 +38,9 @@ resource "kubernetes_deployment" "deployment" {
             }
 
             dynamic "env" {
-              for_each = try(container.value.env_variables, {}) != null ? container.value.env_vars : {}
+              for_each = try(container.value.env_variables, {}) != null ? container.value.env_variables : {}
               content {
-                name  = name.key
+                name  = env.key
                 value = env.value
               }
             }

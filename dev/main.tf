@@ -24,6 +24,10 @@ module "k8s-config" {
         "mqtt-server" = {
           image = "${var.registry_server}/custom-mqtt-server"
           port  = 1883
+          env_variables = {
+            "USERNAME" = var.mqtt_username
+            "PASSWORD" = var.mqtt_password
+          }
         }
       }
     }

@@ -4,7 +4,7 @@ variable "ecr_name" {
 
 variable "image_mutability" {
   type    = string
-  default = "IMMUTABLE"
+  default = null
 }
 
 variable "encrypt_type" {
