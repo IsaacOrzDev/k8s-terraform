@@ -48,3 +48,7 @@ module "k8s-config" {
     }]
   }
 }
+
+output "k8s-config" {
+  value = module.k8s-config
+}

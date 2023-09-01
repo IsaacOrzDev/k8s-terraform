@@ -20,3 +20,7 @@ resource "kubernetes_service" "service" {
   }
 
 }
+
+output "services" {
+  value = [for i, item in kubernetes_service.service : item.metadata[0].name]
+}

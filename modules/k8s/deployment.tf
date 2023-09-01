@@ -74,3 +74,7 @@ resource "kubernetes_deployment" "deployment" {
   }
 
 }
+
+output "deployments" {
+  value = [for i, item in kubernetes_deployment.deployment : item.metadata[0].name]
+}

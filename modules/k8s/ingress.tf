@@ -33,3 +33,8 @@ resource "kubernetes_ingress_v1" "ingress" {
 
   count = var.ingress != null ? 1 : 0
 }
+
+output "ingress" {
+  value = var.ingress != null ? [for i, item in var.ingress.paths : { path = item.path != null ? item.path : "/", service = "${item.service}-service" }] : null
+
+}
