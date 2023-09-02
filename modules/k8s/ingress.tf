@@ -19,9 +19,9 @@ resource "kubernetes_ingress_v1" "ingress" {
             path_type = "Prefix"
             backend {
               service {
-                name = "${path.value.service}-service"
+                name = path.value.service
                 port {
-                  number = path.value.port
+                  number = path.value.port != null ? path.value.port : 80
                 }
               }
             }

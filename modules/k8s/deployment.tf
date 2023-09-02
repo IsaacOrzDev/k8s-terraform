@@ -4,21 +4,21 @@ resource "kubernetes_deployment" "deployment" {
 
   metadata {
     namespace = var.namespace
-    name      = "${each.key}-deployment"
+    name      = each.key
   }
 
   spec {
     replicas = 1
     selector {
       match_labels = {
-        app = "${each.key}-deployment"
+        app = "${each.key}"
       }
     }
 
     template {
       metadata {
         labels = {
-          app = "${each.key}-deployment"
+          app = "${each.key}"
         }
       }
 
@@ -32,9 +32,12 @@ resource "kubernetes_deployment" "deployment" {
 
             image_pull_policy = try(container.image_pull_policy, "Always")
 
-            port {
-              container_port = container.value.port
-              protocol       = try(container.value.port_protocol, "TCP")
+            dynamic "port" {
+              for_each = container.value.port != null ? [container.value.port] : []
+              content {
+                container_port = port.value
+                protocol       = try(container.value.port_protocol, "TCP")
+              }
             }
 
             dynamic "env" {

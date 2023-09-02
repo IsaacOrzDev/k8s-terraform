@@ -2,13 +2,13 @@ resource "kubernetes_service" "service" {
   for_each = { for name, deployment in var.deployments : name => deployment if deployment.service != null }
 
   metadata {
-    name      = "${each.key}-service"
+    name      = each.value.service.name
     namespace = var.namespace
   }
 
   spec {
     selector = {
-      app = "${each.key}-deployment"
+      app = "${each.key}"
     }
 
     port {

@@ -25,15 +25,31 @@ variable "deployments" {
       }))
       image             = string
       image_pull_policy = optional(string)
-      port              = number
+      port              = optional(number)
       port_protocol     = optional(string)
       env_variables     = optional(map(string))
     }))
     service = optional(object({
+      name          = string
       port          = list(number)
       port_protocol = optional(string)
     }))
   }))
+
+  default = {
+    "nginx-deployment" = {
+      containers = {
+        "nginx" = {
+          image = "nginx"
+          port  = 80
+        }
+      }
+      service = {
+        name = "nginx-service"
+        port = [80]
+      }
+    }
+  }
 }
 
 variable "ingress" {
@@ -42,9 +58,14 @@ variable "ingress" {
     paths = list(object({
       path    = optional(string)
       service = string
-      port    = number
+      port    = optional(number)
     }))
   })
 
-  default = null
+  default = {
+    name = "demo-system"
+    paths = [{
+      service = "nginx-service"
+    }]
+  }
 }
