@@ -6,7 +6,15 @@ module "ecr-repo" {
 }
 
 output "ecr-repo" {
-  value = module.ecr-repo
+  value = {
+    name = module.ecr-repo.ecr_name
+    arn  = module.ecr-repo.ecr_arn
+  }
+}
+
+output "ecr-repo_access_key" {
+  value = module.ecr-repo.ecr_user_access_key
+  sensitive = true
 }
 
 module "k8s-config" {
