@@ -1,20 +1,13 @@
 module "ecr-repo" {
-  source   = "../modules/ecr"
-  ecr_name = ["custom-mqtt-server", "mqtt-tester", "demo-system-api", "demo-system-auth"]
-  region   = var.region
-  profile  = var.profile
+  source                              = "../modules/ecr"
+  ecr_name                            = ["custom-mqtt-server", "mqtt-tester", "demo-system-api", "demo-system-auth"]
+  region                              = var.region
+  profile                             = var.profile
+  arn_of_identity_provider_for_github = var.arn_of_identity_provider_for_github
 }
 
 output "ecr-repo" {
-  value = {
-    name = module.ecr-repo.ecr_name
-    arn  = module.ecr-repo.ecr_arn
-  }
-}
-
-output "ecr-repo_access_key" {
-  value = module.ecr-repo.ecr_user_access_key
-  sensitive = true
+  value = module.ecr-repo
 }
 
 module "k8s-config" {
@@ -67,12 +60,13 @@ module "k8s-config" {
         }
         "auth" = {
           image = "${var.registry_server}/demo-system-auth"
-          port = 8000
+          port  = 8000
           env_variables = {
-            "MQTT_HOST" = "mqtt-server-service"
-            "MQTT_PORT" = 1883
-            "MQTT_USERNAME" = var.mqtt_username
-            "MQTT_PASSWORD" = var.mqtt_password
+            "MQTT_HOST"      = "mqtt-server-service"
+            "MQTT_PORT"      = 1883
+            "MQTT_USERNAME"  = var.mqtt_username
+            "MQTT_PASSWORD"  = var.mqtt_password
+            "JWT_SECRET_KEY" = var.jwt_secret_key
           }
         }
 

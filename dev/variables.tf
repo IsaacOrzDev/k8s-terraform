@@ -36,3 +36,13 @@ variable "google_client_secret" {
   type      = string
   sensitive = true
 }
+
+variable "jwt_secret_key" {
+  type      = string
+  sensitive = true
+}
+
+variable "arn_of_identity_provider_for_github" {
+  type    = string
+  default = null
+}
