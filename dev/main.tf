@@ -51,11 +51,15 @@ module "k8s-config" {
           image = "${var.registry_server}/demo-system-api"
           port  = 3000
           env_variables = {
-            "MQTT_URL"             = "mqtt://mqtt-server-service:1883"
-            "MQTT_USERNAME"        = var.mqtt_username
-            "MQTT_PASSWORD"        = var.mqtt_password
-            "GOOGLE_CLIENT_ID"     = var.google_client_id
-            "GOOGLE_CLIENT_SECRET" = var.google_client_secret
+            "MQTT_URL"              = "mqtt://mqtt-server-service:1883"
+            "MQTT_USERNAME"         = var.mqtt_username
+            "MQTT_PASSWORD"         = var.mqtt_password
+            "GOOGLE_CLIENT_ID"      = var.google_client_id
+            "GOOGLE_CLIENT_SECRET"  = var.google_client_secret
+            "AWS_ACCESS_KEY_ID"     = var.aws_access_key
+            "AWS_SECRET_ACCESS_KEY" = var.aws_secret_access_key
+            "SENDER_EMAIL"          = var.sender_email
+            "SNS_TOPIC_ARN"         = var.sns_topic_arn
           }
         }
         "auth" = {

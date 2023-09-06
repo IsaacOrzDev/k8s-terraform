@@ -46,3 +46,23 @@ variable "arn_of_identity_provider_for_github" {
   type    = string
   default = null
 }
+
+variable "aws_access_key" {
+  type    = string
+  default = null
+}
+
+variable "aws_secret_access_key" {
+  type    = string
+  default = null
+}
+
+variable "sender_email" {
+  type    = string
+  default = null
+}
+
+variable "sns_topic_arn" {
+  type    = string
+  default = null
+}
