@@ -42,6 +42,11 @@ variable "jwt_secret_key" {
   sensitive = true
 }
 
+variable "mongodb_url" {
+  type      = string
+  sensitive = true
+}
+
 variable "arn_of_identity_provider_for_github" {
   type    = string
   default = null

@@ -24,6 +24,7 @@ locals {
     "AWS_SECRET_ACCESS_KEY" = var.aws_secret_access_key
     "SENDER_EMAIL"          = var.sender_email
     "SNS_TOPIC_ARN"         = var.sns_topic_arn
+    "DATABASE_URL"          = var.mongodb_url
     } : {
     name  = k
     value = v
@@ -53,6 +54,8 @@ locals {
 }
 
 module "ecs" {
+  arn_of_identity_provider_for_github = var.arn_of_identity_provider_for_github
+
   source  = "../modules/ecs"
   region  = var.region
   profile = var.profile
