@@ -44,8 +44,8 @@ resource "aws_ecs_task_definition" "task_definition" {
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
   container_definitions    = jsonencode(var.container_definitions)
-  memory                   = 512
-  cpu                      = 256
+  memory                   = var.memory
+  cpu                      = var.cpu
   execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
 }
 
@@ -54,7 +54,7 @@ resource "aws_ecs_service" "app_service" {
   cluster         = aws_ecs_cluster.cluster.id                  # Reference the created Cluster
   task_definition = aws_ecs_task_definition.task_definition.arn # Reference the task that the service will spin up
   launch_type     = "FARGATE"
-  desired_count   = 1 # Set up the number of containers to 1
+  desired_count   = var.service_count # Set up the number of containers
 
   load_balancer {
     target_group_arn = aws_lb_target_group.target_group.arn # Reference the target group

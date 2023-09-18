@@ -61,29 +61,13 @@ module "ecs" {
   domain_name     = var.domain_name
   sub_domain_name = "demo-system"
 
-  # container_definitions = <<DEFINITION
-  # [
-  #   {
-  #     "name": "demo-system-task",
-  #     "image": "${var.registry_server}/demo-system-api:latest",
-  #     "essential": true,
-  #     "portMappings": [
-  #       {
-  #         "containerPort": 3000,
-  #         "hostPort": 3000
-  #       }
-  #     ],
-  #     "environment": [
-  #       {
+  cpu           = 256
+  memory        = 512
+  service_count = 1
 
-  #       }
-  #     ]
-  #   }
-  # ]
-  # DEFINITION
   container_definitions = [
     {
-      name      = "demo-system-task"
+      name      = "api"
       image     = "${var.registry_server}/demo-system-api:latest"
       essential = true
       portMappings = [
@@ -121,7 +105,7 @@ module "ecs" {
   ]
 
   load_balancer = {
-    container_name = "demo-system-task"
+    container_name = "api"
     port           = 3000
   }
 }
