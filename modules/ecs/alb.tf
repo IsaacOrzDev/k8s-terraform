@@ -20,6 +20,13 @@ resource "aws_security_group" "load_balancer_security_group" {
     cidr_blocks = ["0.0.0.0/0"] # Allow traffic in from all sources
   }
 
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] # Allow traffic in from all sources
+  }
+
   egress {
     from_port   = 0
     to_port     = 0
@@ -47,16 +54,6 @@ resource "aws_lb_target_group" "target_group" {
   vpc_id      = aws_default_vpc.default_vpc.id
 }
 
-resource "aws_lb_listener" "listener" {
-  load_balancer_arn = aws_alb.application_load_balancer.arn #  load balancer
-  port              = "80"
-  protocol          = "HTTP"
-  default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.target_group.arn # target group
-  }
-}
-
 resource "aws_security_group" "service_security_group" {
   ingress {
     from_port = 0
@@ -74,6 +71,49 @@ resource "aws_security_group" "service_security_group" {
   }
 }
 
-output "app_url" {
-  value = aws_alb.application_load_balancer.dns_name
+resource "aws_route53_record" "api" {
+  name    = "${var.sub_domain_name}.${var.domain_name}"
+  type    = "A"
+  zone_id = data.aws_route53_zone.public.zone_id
+
+  alias {
+    name                   = aws_alb.application_load_balancer.dns_name
+    zone_id                = aws_alb.application_load_balancer.zone_id
+    evaluate_target_health = false
+  }
+}
+
+resource "aws_lb_listener" "listener" {
+  load_balancer_arn = aws_alb.application_load_balancer.arn #  load balancer
+  port              = "80"
+  protocol          = "HTTP"
+  default_action {
+    # if https is not enabled
+    # type             = "forward"
+    # target_group_arn = aws_lb_target_group.target_group.arn # target group
+
+    type = "redirect"
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
+}
+
+# if https is enabled
+resource "aws_lb_listener" "lb_listener" {
+  load_balancer_arn = aws_alb.application_load_balancer.arn
+  port              = 443
+  protocol          = "HTTPS"
+  certificate_arn   = aws_acm_certificate.api.arn
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.target_group.arn
+  }
+}
+
+output "alb_default_url" {
+  value = "http://${aws_alb.application_load_balancer.dns_name}"
 }

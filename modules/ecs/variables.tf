@@ -7,6 +7,11 @@ variable "profile" {
   default = null
 }
 
+variable "name" {
+  type        = string
+  description = "name to describe your ecs cluster"
+}
+
 variable "container_definitions" {
   type = list(object({
     name  = string
@@ -21,4 +26,19 @@ variable "container_definitions" {
       value = string
     })))
   }))
+}
+
+variable "load_balancer" {
+  type = object({
+    container_name = string
+    port           = number
+  })
+}
+
+variable "domain_name" {
+  type = string
+}
+
+variable "sub_domain_name" {
+  type = string
 }

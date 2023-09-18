@@ -14,7 +14,7 @@ provider "aws" {
 
 
 resource "aws_ecs_cluster" "cluster" {
-  name = "demo-system-cluster"
+  name = "${var.name}-cluster"
 }
 
 data "aws_iam_policy_document" "assume_role_policy" {
@@ -40,7 +40,7 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy" {
 
 
 resource "aws_ecs_task_definition" "task_definition" {
-  family                   = "demo-system-task"
+  family                   = "${var.name}-task"
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
   container_definitions    = jsonencode(var.container_definitions)
@@ -50,7 +50,7 @@ resource "aws_ecs_task_definition" "task_definition" {
 }
 
 resource "aws_ecs_service" "app_service" {
-  name            = "demo-system-service"                       # Name the service
+  name            = "${var.name}-service"                       # Name the service
   cluster         = aws_ecs_cluster.cluster.id                  # Reference the created Cluster
   task_definition = aws_ecs_task_definition.task_definition.arn # Reference the task that the service will spin up
   launch_type     = "FARGATE"
@@ -58,8 +58,8 @@ resource "aws_ecs_service" "app_service" {
 
   load_balancer {
     target_group_arn = aws_lb_target_group.target_group.arn # Reference the target group
-    container_name   = aws_ecs_task_definition.task_definition.family
-    container_port   = 3000 # Specify the container port
+    container_name   = var.load_balancer.container_name
+    container_port   = var.load_balancer.port
   }
 
   network_configuration {

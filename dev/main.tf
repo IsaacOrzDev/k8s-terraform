@@ -56,6 +56,11 @@ module "ecs" {
   source  = "../modules/ecs"
   region  = var.region
   profile = var.profile
+  name    = "demo-system"
+
+  domain_name     = var.domain_name
+  sub_domain_name = "demo-system"
+
   # container_definitions = <<DEFINITION
   # [
   #   {
@@ -114,6 +119,11 @@ module "ecs" {
       environment = local.auth_env_variables
     }
   ]
+
+  load_balancer = {
+    container_name = "demo-system-task"
+    port           = 3000
+  }
 }
 
 output "ecs" {
