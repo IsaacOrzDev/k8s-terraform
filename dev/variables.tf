@@ -59,6 +59,11 @@ variable "mongodb_url" {
   sensitive = true
 }
 
+variable "postgresql_connection_string" {
+  type      = string
+  sensitive = true
+}
+
 variable "arn_of_identity_provider_for_github" {
   type    = string
   default = null

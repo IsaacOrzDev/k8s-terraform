@@ -55,6 +55,7 @@ module "ecs" {
       environment = {
         "USERNAME" = var.mqtt_username
         "PASSWORD" = var.mqtt_password
+        # "CONNECTION_STRING" = var.postgresql_connection_string
       }
     },
     {
