@@ -14,17 +14,12 @@ variable "name" {
 
 variable "container_definitions" {
   type = list(object({
-    name  = string
-    image = string
-    portMappings = list(object({
-      containerPort = number
-      hostPort      = number
-    }))
-    essential = optional(bool)
-    environment = optional(list(object({
-      name  = string
-      value = string
-    })))
+    name        = string
+    image       = string
+    ports       = list(number)
+    essential   = optional(bool)
+    hasLogs     = optional(bool)
+    environment = optional(map(string))
   }))
 }
 
