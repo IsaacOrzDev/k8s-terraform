@@ -1,6 +1,12 @@
 module "ecr-repo" {
-  source                              = "../modules/ecr"
-  ecr_name                            = ["custom-mqtt-server", "mqtt-tester", "demo-system-api", "demo-system-auth"]
+  source = "../modules/ecr"
+  ecr_name = [
+    "custom-mqtt-server",
+    "mqtt-tester",
+    "demo-system-api",
+    "demo-system-auth",
+    "demo-system-sub"
+  ]
   region                              = var.region
   profile                             = var.profile
   arn_of_identity_provider_for_github = var.arn_of_identity_provider_for_github
@@ -46,6 +52,7 @@ module "ecs" {
         "SNS_TOPIC_ARN"         = var.sns_topic_arn
         "DATABASE_URL"          = var.mongodb_url
         "PORTAL_URL"            = var.portal_url
+        "SUB_SERVICE_PORT"      = "localhost:5008"
       }
     },
     {
@@ -70,6 +77,12 @@ module "ecs" {
         "MQTT_PASSWORD"  = var.mqtt_password
         "JWT_SECRET_KEY" = var.jwt_secret_key
       }
+    },
+    {
+      name  = "sub"
+      image = "${var.registry_server}/demo-system-sub:latest"
+      # essential = true
+      ports = [5008, 5008]
     }
   ]
 
