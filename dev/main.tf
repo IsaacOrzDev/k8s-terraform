@@ -62,7 +62,6 @@ module "ecs" {
       environment = {
         "USERNAME" = var.mqtt_username
         "PASSWORD" = var.mqtt_password
-        # "CONNECTION_STRING" = var.postgresql_connection_string
       }
     },
     {
@@ -82,7 +81,10 @@ module "ecs" {
       name  = "sub"
       image = "${var.registry_server}/demo-system-sub:latest"
       # essential = true
-      ports = [5008, 5008]
+      ports = [5008, 5008],
+      environment = {
+        "CONNECTION_STRING" = var.postgresql_connection_string
+      }
     }
   ]
 
