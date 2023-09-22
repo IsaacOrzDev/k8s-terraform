@@ -57,3 +57,8 @@ variable "arn_of_identity_provider_for_github" {
   type    = string
   default = null
 }
+
+variable "github_username" {
+  type    = string
+  default = null
+}

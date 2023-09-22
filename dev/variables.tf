@@ -96,3 +96,8 @@ variable "domain_name" {
 variable "portal_url" {
   type = string
 }
+
+variable "github_username" {
+  type    = string
+  default = null
+}

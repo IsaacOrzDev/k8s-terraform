@@ -10,6 +10,7 @@ module "ecr-repo" {
   region                              = var.region
   profile                             = var.profile
   arn_of_identity_provider_for_github = var.arn_of_identity_provider_for_github
+  github_username                     = var.github_username
 }
 
 output "ecr-repo" {
@@ -18,11 +19,13 @@ output "ecr-repo" {
 
 module "ecs" {
   arn_of_identity_provider_for_github = var.arn_of_identity_provider_for_github
+  github_username                     = var.github_username
 
   source  = "../modules/ecs"
   region  = var.region
   profile = var.profile
   name    = "demo-system"
+
 
   domain_name     = var.domain_name
   sub_domain_name = "demo-system"

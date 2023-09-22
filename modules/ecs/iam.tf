@@ -41,6 +41,9 @@ resource "aws_iam_role" "ecs_update_service_role" {
           "ForAllValues:StringEquals": {
               "token.actions.githubusercontent.com:iss": "https://token.actions.githubusercontent.com",
               "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
+          },
+          "StringLike": {
+              "token.actions.githubusercontent.com:sub": "repo:${var.github_username}/*:*"
           }
       }
     }
