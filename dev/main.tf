@@ -2,10 +2,11 @@ module "ecr-repo" {
   source = "../modules/ecr"
   ecr_name = [
     "custom-mqtt-server",
-    "mqtt-tester",
     "demo-system-api",
     "demo-system-auth",
-    "demo-system-sub"
+    "demo-system-user-module",
+    "demo-system-generator-module",
+    "demo-system-document-module",
   ]
   region                              = var.region
   profile                             = var.profile
@@ -36,7 +37,7 @@ module "ecs" {
 
   container_definitions = [
     {
-      name      = "api"
+      name      = "api-module"
       image     = "${var.registry_server}/demo-system-api:latest"
       essential = true
       ports     = [3000, 3000]
@@ -81,8 +82,8 @@ module "ecs" {
       }
     },
     {
-      name  = "sub"
-      image = "${var.registry_server}/demo-system-sub:latest"
+      name  = "user-module"
+      image = "${var.registry_server}/demo-system-user-module:latest"
       # essential = true
       ports = [5008, 5008],
       environment = {
@@ -92,7 +93,7 @@ module "ecs" {
   ]
 
   load_balancer = {
-    container_name = "api"
+    container_name = "api-module"
     port           = 3000
   }
 }
