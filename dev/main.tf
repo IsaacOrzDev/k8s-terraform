@@ -1,9 +1,7 @@
 module "ecr-repo" {
   source = "../modules/ecr"
   ecr_name = [
-    "custom-mqtt-server",
     "demo-system-api",
-    "demo-system-auth",
     "demo-system-user-module",
     "demo-system-generator-module",
     "demo-system-document-module",
@@ -43,9 +41,6 @@ module "ecs" {
       ports     = [3000, 3000]
       environment = {
         "IS_MICROSERVICE"       = true
-        "MQTT_URL"              = "mqtt://localhost:1883"
-        "MQTT_USERNAME"         = var.mqtt_username
-        "MQTT_PASSWORD"         = var.mqtt_password
         "GOOGLE_CLIENT_ID"      = var.google_client_id
         "GOOGLE_CLIENT_SECRET"  = var.google_client_secret
         "GITHUB_CLIENT_ID"      = var.github_client_id
@@ -56,29 +51,7 @@ module "ecs" {
         "SNS_TOPIC_ARN"         = var.sns_topic_arn
         "DATABASE_URL"          = var.mongodb_url
         "PORTAL_URL"            = var.portal_url
-        "SUB_SERVICE_PORT"      = "localhost:5008"
-      }
-    },
-    {
-      name  = "mqtt-server"
-      image = "${var.registry_server}/custom-mqtt-server:latest"
-      ports = [1883, 1883]
-      environment = {
-        "USERNAME" = var.mqtt_username
-        "PASSWORD" = var.mqtt_password
-      }
-    },
-    {
-      name  = "auth"
-      image = "${var.registry_server}/demo-system-auth:latest"
-      # essential = true
-      ports = [8000, 8000]
-      environment = {
-        "MQTT_HOST"      = "localhost"
-        "MQTT_PORT"      = 1883
-        "MQTT_USERNAME"  = var.mqtt_username
-        "MQTT_PASSWORD"  = var.mqtt_password
-        "JWT_SECRET_KEY" = var.jwt_secret_key
+        "USER_MODULE_PORT"      = "localhost:5008"
       }
     },
     {
