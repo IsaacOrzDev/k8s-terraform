@@ -101,3 +101,8 @@ variable "github_username" {
   type    = string
   default = null
 }
+
+variable "repliate_api_token" {
+  type      = string
+  sensitive = true
+}

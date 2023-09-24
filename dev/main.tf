@@ -51,16 +51,35 @@ module "ecs" {
         "SNS_TOPIC_ARN"         = var.sns_topic_arn
         "DATABASE_URL"          = var.mongodb_url
         "PORTAL_URL"            = var.portal_url
-        "USER_MODULE_PORT"      = "localhost:5008"
+        "USER_MODULE_URL"       = "localhost:5008"
+        "GENERATOR_MODULE_URL"  = "localhost:5002"
+        "DOCUMENT_MODULE_URL"   = "localhost:5003"
       }
     },
     {
       name  = "user-module"
       image = "${var.registry_server}/demo-system-user-module:latest"
-      # essential = true
-      ports = [5008, 5008],
+      ports = [5008, 5008]
       environment = {
         "CONNECTION_STRING" = var.postgresql_connection_string
+      }
+    },
+    {
+      name  = "generator-module"
+      image = "${var.registry_server}/demo-system-generator-module:latest"
+      ports = [5002, 5002]
+      environment = {
+        "PORT"                = 5002
+        "REPLICATE_API_TOKEN" = var.repliate_api_token
+        "REPLICATE_MODEL"     = "stability-ai/stable-diffusion:27b93a2413e7f36cd83da926f3656280b2931564ff050bf9575f1fdf9bcd7478"
+      }
+    },
+    {
+      name  = "document-module"
+      image = "${var.registry_server}/demo-system-document-module:latest"
+      ports = [5003, 5003]
+      environment = {
+        "DATABASE_URL" = var.mongodb_url
       }
     }
   ]
