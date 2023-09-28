@@ -93,6 +93,10 @@ variable "domain_name" {
   type = string
 }
 
+variable "api_url" {
+  type = string
+}
+
 variable "portal_url" {
   type = string
 }
@@ -103,6 +107,17 @@ variable "github_username" {
 }
 
 variable "repliate_api_token" {
+  type      = string
+  sensitive = true
+}
+
+
+variable "scribble_model" {
+  type      = string
+  sensitive = true
+}
+
+variable "blip_model" {
   type      = string
   sensitive = true
 }

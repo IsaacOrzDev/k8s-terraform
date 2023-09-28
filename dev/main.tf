@@ -50,6 +50,7 @@ module "ecs" {
         "SENDER_EMAIL"          = var.sender_email
         "SNS_TOPIC_ARN"         = var.sns_topic_arn
         "DATABASE_URL"          = var.mongodb_url
+        "API_URL"               = var.api_url
         "PORTAL_URL"            = var.portal_url
         "USER_MODULE_URL"       = "localhost:5008"
         "GENERATOR_MODULE_URL"  = "localhost:5002"
@@ -71,7 +72,8 @@ module "ecs" {
       environment = {
         "PORT"                = 5002
         "REPLICATE_API_TOKEN" = var.repliate_api_token
-        "REPLICATE_MODEL"     = "stability-ai/stable-diffusion:27b93a2413e7f36cd83da926f3656280b2931564ff050bf9575f1fdf9bcd7478"
+        "SCRIBBLE_MODEL"      = var.scribble_model
+        "BLIP_MODEL"          = var.blip_model
       }
     },
     {
