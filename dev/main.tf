@@ -40,21 +40,21 @@ module "ecs" {
       essential = true
       ports     = [3000, 3000]
       environment = {
-        "IS_MICROSERVICE"       = true
-        "GOOGLE_CLIENT_ID"      = var.google_client_id
-        "GOOGLE_CLIENT_SECRET"  = var.google_client_secret
-        "GITHUB_CLIENT_ID"      = var.github_client_id
-        "GITHUB_CLIENT_SECRET"  = var.github_client_secret
-        "AWS_ACCESS_KEY_ID"     = var.aws_access_key
-        "AWS_SECRET_ACCESS_KEY" = var.aws_secret_access_key
-        "SENDER_EMAIL"          = var.sender_email
-        "SNS_TOPIC_ARN"         = var.sns_topic_arn
-        "DATABASE_URL"          = var.mongodb_url
-        "API_URL"               = var.api_url
-        "PORTAL_URL"            = var.portal_url
-        "USER_MODULE_URL"       = "localhost:5008"
-        "GENERATOR_MODULE_URL"  = "localhost:5002"
-        "DOCUMENT_MODULE_URL"   = "localhost:5003"
+        "IS_MICROSERVICE"                 = true
+        "GOOGLE_CLIENT_ID"                = var.google_client_id
+        "GOOGLE_CLIENT_SECRET"            = var.google_client_secret
+        "GITHUB_CLIENT_ID"                = var.github_client_id
+        "GITHUB_CLIENT_SECRET"            = var.github_client_secret
+        "AWS_ACCESS_KEY_ID_FOR_EMAIL"     = var.aws_access_key_for_email
+        "AWS_SECRET_ACCESS_KEY_FOR_EMAIL" = var.aws_secret_access_key_for_email
+        "SENDER_EMAIL"                    = var.sender_email
+        "SNS_TOPIC_ARN"                   = var.sns_topic_arn
+        "DATABASE_URL"                    = var.mongodb_url
+        "API_URL"                         = var.api_url
+        "PORTAL_URL"                      = var.portal_url
+        "USER_MODULE_URL"                 = "localhost:5008"
+        "GENERATOR_MODULE_URL"            = "localhost:5002"
+        "DOCUMENT_MODULE_URL"             = "localhost:5003"
       }
     },
     {
