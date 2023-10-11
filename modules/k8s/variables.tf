@@ -13,6 +13,8 @@ variable "registry_server" {
 
 variable "registry_password" {
   type = string
+
+  default = null
 }
 
 variable "deployments" {
@@ -69,3 +71,23 @@ variable "ingress" {
     }]
   }
 }
+
+variable "cluster_config" {
+  type = object({
+    host                   = optional(string)
+    cluster_ca_certificate = optional(string)
+    token                  = optional(string)
+  })
+
+  default = {
+    host                   = null
+    cluster_ca_certificate = null
+    token                  = null
+  }
+}
+
+variable "is_aws" {
+  type    = bool
+  default = false
+}
+

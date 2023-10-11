@@ -3,12 +3,16 @@ resource "kubernetes_ingress_v1" "ingress" {
   metadata {
     name      = "${var.ingress.name}-ingress"
     namespace = var.namespace
-    annotations = {
+    annotations = var.is_aws ? {
+      "alb.ingress.kubernetes.io/scheme" = "internet-facing"
+      "alb.ingress.kubernetes.io/target-type" : "ip"
+      } : {
       "kubernetes.io/ingress.class" = "nginx"
     }
   }
 
   spec {
+    ingress_class_name = var.is_aws ? "alb" : "nginx"
     rule {
       http {
         dynamic "path" {
