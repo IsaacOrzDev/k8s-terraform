@@ -15,33 +15,6 @@ provider "aws" {
   profile = var.profile
 }
 
-resource "aws_eks_cluster" "cluster" {
-  name     = var.cluster_name
-  role_arn = aws_iam_role.eks-cluster.arn
-
-  vpc_config {
-
-    endpoint_private_access = false
-    endpoint_public_access  = true
-    public_access_cidrs     = ["0.0.0.0/0"]
-
-    subnet_ids = [
-      aws_subnet.private-1a.id,
-      aws_subnet.private-1b.id,
-      aws_subnet.public-1a.id,
-      aws_subnet.public-1b.id
-    ]
-  }
-
-  depends_on = [aws_iam_role_policy_attachment.amazon-eks-cluster-policy]
-}
-
-
-
-data "aws_eks_cluster_auth" "eks" {
-  name = aws_eks_cluster.cluster.id
-}
-
 provider "kubernetes" {
 
   host                   = aws_eks_cluster.cluster.endpoint
@@ -59,16 +32,4 @@ provider "helm" {
       command     = "aws"
     }
   }
-}
-
-output "cluster_endpoint" {
-  value = aws_eks_cluster.cluster.endpoint
-}
-
-output "cluster_certificate" {
-  value = base64decode(aws_eks_cluster.cluster.certificate_authority[0].data)
-}
-
-output "auth_token" {
-  value = data.aws_eks_cluster_auth.eks.token
 }
