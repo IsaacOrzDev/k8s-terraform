@@ -15,3 +15,25 @@ variable "cluster_name" {
 variable "namespace" {
   type = string
 }
+
+variable "sub_domain_name" {
+  type    = string
+  default = null
+}
+
+variable "domain_name" {
+  type    = string
+  default = null
+}
+
+variable "vpc" {
+  type = object({
+    cidr_block = string
+    private_subnets = list(object({
+      cidr_block = string
+    }))
+    public_subnets = list(object({
+      cidr_block = string
+    }))
+  })
+}

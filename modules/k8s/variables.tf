@@ -56,11 +56,14 @@ variable "deployments" {
 
 variable "ingress" {
   type = object({
-    name = string
+    name            = string
+    domain_name     = optional(string)
+    certificate_arn = optional(string)
     paths = list(object({
-      path    = optional(string)
-      service = string
-      port    = optional(number)
+      path      = optional(string)
+      service   = string
+      port      = optional(number)
+      path_type = optional(string)
     }))
   })
 

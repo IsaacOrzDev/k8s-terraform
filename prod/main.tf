@@ -11,7 +11,24 @@ module "eks" {
   source       = "../modules/eks"
   region       = var.region
   cluster_name = "demo_system"
-  namespace    = "demo-system-prod"
+
+  vpc = {
+    cidr_block = "10.0.0.0/16"
+    private_subnets = [{
+      cidr_block = "10.0.0.0/19"
+      }, {
+      cidr_block = "10.0.32.0/19"
+    }]
+    public_subnets = [{
+      cidr_block = "10.0.64.0/19"
+      }, {
+      cidr_block = "10.0.96.0/19"
+    }]
+  }
+
+  namespace       = "demo-system-prod"
+  sub_domain_name = "demo-system-k8s"
+  domain_name     = var.domain_name
 }
 
 output "eks" {
@@ -23,15 +40,27 @@ output "eks" {
 module "k8s-config" {
   source = "../modules/k8s"
 
-  namespace = "demo-system-prod"
-
-  is_aws          = true
-  registry_server = var.registry_server
-
   cluster_config = {
     host                   = module.eks.cluster_endpoint
     cluster_ca_certificate = module.eks.cluster_certificate
     token                  = module.eks.auth_token
+  }
+
+  is_aws          = true
+  registry_server = var.registry_server
+
+  namespace = "demo-system-prod"
+
+  ingress = {
+    domain_name     = "demo-system-k8s.${var.domain_name}"
+    certificate_arn = module.eks.certificate_arn
+    name            = "demo-system"
+    paths = [{
+      path      = "/*"
+      path_type = "ImplementationSpecific"
+      service   = "nginx-service"
+      port      = 80
+    }]
   }
 
   # ingress = null
