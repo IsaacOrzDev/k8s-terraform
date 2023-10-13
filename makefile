@@ -6,5 +6,11 @@ password:
 	aws ecr get-login-password
 apply-prod:
 	cd prod && terraform apply
-apply-prod-password:
-	cd prod && terraform apply -var registry_password=$(aws ecr get-login-password)
+apply-local:
+	cd local && terraform apply
+apply-local-password:
+	cd local && terraform apply -var registry_password=$(aws ecr get-login-password)
+minikube-start:
+	minikube start
+minikube-tunnel:
+	minikube tunnel
