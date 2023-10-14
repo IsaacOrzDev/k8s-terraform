@@ -16,6 +16,19 @@ output "ecr-repo" {
   value = module.ecr-repo
 }
 
+module "s3" {
+  source  = "../modules/s3"
+  region  = var.region
+  profile = var.profile
+
+  bucket_name = "demo-system-images"
+}
+
+output "s3" {
+  value     = module.s3
+  sensitive = true
+}
+
 module "ecs" {
   arn_of_identity_provider_for_github = var.arn_of_identity_provider_for_github
   github_username                     = var.github_username
