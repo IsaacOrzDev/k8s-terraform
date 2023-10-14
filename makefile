@@ -1,4 +1,6 @@
 apply-dev:
+	cd shared && terraform apply
+apply-dev:
 	cd dev && terraform apply
 update-dev:
 	aws ecs update-service --cluster demo-system-cluster --service demo-system-service --force-new-deployment
