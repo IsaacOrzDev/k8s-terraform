@@ -1,16 +1,7 @@
-# module "ecr-repo" {
-#   source                              = "../modules/ecr"
-#   ecr_name                            = ["custom-mqtt-server", "mqtt-tester", "demo-system-api", "demo-system-auth"]
-#   region                              = var.region
-#   profile                             = var.profile
-#   arn_of_identity_provider_for_github = var.arn_of_identity_provider_for_github
-# }
-
-
 module "eks" {
   source       = "../modules/eks"
   region       = var.region
-  cluster_name = "demo_system"
+  cluster_name = "sketch_blend"
 
   vpc = {
     cidr_block = "10.0.0.0/16"
@@ -26,8 +17,8 @@ module "eks" {
     }]
   }
 
-  namespace       = "demo-system-prod"
-  sub_domain_name = "demo-system-k8s"
+  namespace       = "sketch-blend"
+  sub_domain_name = "sketch-blend-api"
   domain_name     = var.domain_name
 }
 
@@ -49,13 +40,13 @@ module "k8s-config" {
   is_aws          = true
   registry_server = var.registry_server
 
-  namespace = "demo-system-prod"
+  namespace = "sketch-blend"
 
   deployments = {
     "api-deployment" = {
       containers = {
         "api" = {
-          image = "${var.registry_server}/demo-system-api"
+          image = "${var.registry_server}/sketch-blend-api-module:latest"
           port  = 3000
           env_variables = {
             "GOOGLE_CLIENT_ID"                = var.google_client_id
@@ -84,7 +75,7 @@ module "k8s-config" {
     "user-deployment" = {
       containers = {
         "user" = {
-          image = "${var.registry_server}/demo-system-user-module:latest"
+          image = "${var.registry_server}/sketch-blend-user-module:latest"
           port  = 5008
           env_variables = {
             "CONNECTION_STRING" = var.postgresql_connection_string
@@ -100,7 +91,7 @@ module "k8s-config" {
     "document-deployment" = {
       containers = {
         "document" = {
-          image = "${var.registry_server}/demo-system-document-module:latest"
+          image = "${var.registry_server}/sketch-blend-document-module:latest"
           port  = 5003
           env_variables = {
             "DATABASE_URL" = var.mongodb_url
@@ -115,7 +106,7 @@ module "k8s-config" {
     "generator-deployment" = {
       containers = {
         "generator" = {
-          image = "${var.registry_server}/demo-system-generator-module:latest"
+          image = "${var.registry_server}/sketch-blend-generator-module:latest"
           port  = 5002
           env_variables = {
             "PORT"                = 5002
@@ -133,9 +124,9 @@ module "k8s-config" {
   }
 
   ingress = {
-    domain_name     = "demo-system-k8s.${var.domain_name}"
+    domain_name     = "sketch-blend-api.${var.domain_name}"
     certificate_arn = module.eks.certificate_arn
-    name            = "demo-system"
+    name            = "sketch-blend"
     paths = [{
       path      = "/*"
       path_type = "ImplementationSpecific"

@@ -1,34 +1,3 @@
-module "ecr-repo" {
-  source = "../modules/ecr"
-  ecr_name = [
-    "demo-system-api",
-    "demo-system-user-module",
-    "demo-system-generator-module",
-    "demo-system-document-module",
-  ]
-  region                              = var.region
-  profile                             = var.profile
-  arn_of_identity_provider_for_github = var.arn_of_identity_provider_for_github
-  github_username                     = var.github_username
-}
-
-output "ecr-repo" {
-  value = module.ecr-repo
-}
-
-module "s3" {
-  source  = "../modules/s3"
-  region  = var.region
-  profile = var.profile
-
-  bucket_name = "demo-system-images"
-}
-
-output "s3" {
-  value     = module.s3
-  sensitive = true
-}
-
 module "ecs" {
   arn_of_identity_provider_for_github = var.arn_of_identity_provider_for_github
   github_username                     = var.github_username
@@ -36,11 +5,11 @@ module "ecs" {
   source  = "../modules/ecs"
   region  = var.region
   profile = var.profile
-  name    = "demo-system"
+  name    = "sketch-blend"
 
 
   domain_name     = var.domain_name
-  sub_domain_name = "demo-system"
+  sub_domain_name = "sketch-blend-api-dev"
 
   cpu           = 256
   memory        = 512
@@ -49,7 +18,7 @@ module "ecs" {
   container_definitions = [
     {
       name      = "api-module"
-      image     = "${var.registry_server}/demo-system-api:latest"
+      image     = "${var.registry_server}/sketch-blend-api-module:latest"
       essential = true
       ports     = [3000, 3000]
       environment = {
@@ -72,7 +41,7 @@ module "ecs" {
     },
     {
       name  = "user-module"
-      image = "${var.registry_server}/demo-system-user-module:latest"
+      image = "${var.registry_server}/sketch-blend-user-module:latest"
       ports = [5008, 5008]
       environment = {
         "CONNECTION_STRING" = var.postgresql_connection_string
@@ -80,7 +49,7 @@ module "ecs" {
     },
     {
       name  = "generator-module"
-      image = "${var.registry_server}/demo-system-generator-module:latest"
+      image = "${var.registry_server}/sketch-blend-generator-module:latest"
       ports = [5002, 5002]
       environment = {
         "PORT"                = 5002
@@ -91,7 +60,7 @@ module "ecs" {
     },
     {
       name  = "document-module"
-      image = "${var.registry_server}/demo-system-document-module:latest"
+      image = "${var.registry_server}/sketch-blend-document-module:latest"
       ports = [5003, 5003]
       environment = {
         "DATABASE_URL" = var.mongodb_url

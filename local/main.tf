@@ -2,7 +2,7 @@ module "k8s-config" {
   source = "../modules/k8s"
 
 
-  namespace = "demo-system"
+  namespace = "sketch-blend"
   context   = "minikube"
 
   registry_server   = var.registry_server
@@ -13,7 +13,7 @@ module "k8s-config" {
     "api-deployment" = {
       containers = {
         "api" = {
-          image = "${var.registry_server}/demo-system-api"
+          image = "${var.registry_server}/sketch-blend-api-module:latest"
           port  = 3000
           env_variables = {
             "GOOGLE_CLIENT_ID"                = var.google_client_id
@@ -42,7 +42,7 @@ module "k8s-config" {
     "user-deployment" = {
       containers = {
         "user" = {
-          image = "${var.registry_server}/demo-system-user-module:latest"
+          image = "${var.registry_server}/sketch-blend-user-module:latest"
           port  = 5008
           env_variables = {
             "CONNECTION_STRING" = var.postgresql_connection_string
@@ -58,7 +58,7 @@ module "k8s-config" {
     "document-deployment" = {
       containers = {
         "document" = {
-          image = "${var.registry_server}/demo-system-document-module:latest"
+          image = "${var.registry_server}/sketch-blend-document-module:latest"
           port  = 5003
           env_variables = {
             "DATABASE_URL" = var.mongodb_url
@@ -73,7 +73,7 @@ module "k8s-config" {
     "generator-deployment" = {
       containers = {
         "generator" = {
-          image = "${var.registry_server}/demo-system-generator-module:latest"
+          image = "${var.registry_server}/sketch-blend-generator-module:latest"
           port  = 5002
           env_variables = {
             "PORT"                = 5002
@@ -92,7 +92,7 @@ module "k8s-config" {
 
 
   ingress = {
-    name = "demo-system"
+    name = "sketch-blend"
     paths = [{
       service = "api-service"
     }]

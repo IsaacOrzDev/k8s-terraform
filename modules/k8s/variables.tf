@@ -68,7 +68,7 @@ variable "ingress" {
   })
 
   default = {
-    name = "demo-system"
+    name = "sketch-blend"
     paths = [{
       service = "nginx-service"
     }]
