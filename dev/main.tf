@@ -29,11 +29,15 @@ module "ecs" {
         "GITHUB_CLIENT_SECRET"            = var.github_client_secret
         "AWS_ACCESS_KEY_ID_FOR_EMAIL"     = var.aws_access_key_for_email
         "AWS_SECRET_ACCESS_KEY_FOR_EMAIL" = var.aws_secret_access_key_for_email
+        "AWS_ACCESS_KEY_ID_FOR_S3"        = var.aws_access_key_for_s3
+        "AWS_SECRET_ACCESS_KEY_FOR_S3"    = var.aws_secret_access_key_for_s3
         "SENDER_EMAIL"                    = var.sender_email
         "SNS_TOPIC_ARN"                   = var.sns_topic_arn
         "DATABASE_URL"                    = var.mongodb_url
         "API_URL"                         = var.api_url
         "PORTAL_URL"                      = var.portal_url
+        "S3_IMAGE_BUCKET_NAME"            = "sketch-blend-images"
+        "IMAGES_URL"                      = var.images_url
         "USER_MODULE_URL"                 = "localhost:5008"
         "GENERATOR_MODULE_URL"            = "localhost:5002"
         "DOCUMENT_MODULE_URL"             = "localhost:5003"

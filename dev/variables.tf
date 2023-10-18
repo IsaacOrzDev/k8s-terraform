@@ -79,6 +79,16 @@ variable "aws_secret_access_key_for_email" {
   default = null
 }
 
+variable "aws_access_key_for_s3" {
+  type    = string
+  default = null
+}
+
+variable "aws_secret_access_key_for_s3" {
+  type    = string
+  default = null
+}
+
 variable "sender_email" {
   type    = string
   default = null
@@ -98,6 +108,10 @@ variable "api_url" {
 }
 
 variable "portal_url" {
+  type = string
+}
+
+variable "images_url" {
   type = string
 }
 
