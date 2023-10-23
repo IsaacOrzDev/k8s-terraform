@@ -135,3 +135,12 @@ variable "blip_model" {
   type      = string
   sensitive = true
 }
+
+variable "sentry_dns" {
+  type      = string
+  sensitive = true
+}
+
+variable "negative_prompt" {
+  type = string
+}

@@ -38,6 +38,7 @@ module "ecs" {
         "PORTAL_URL"                      = var.portal_url
         "S3_IMAGE_BUCKET_NAME"            = "sketch-blend-images"
         "IMAGES_URL"                      = var.images_url
+        "SENTRY_DNS"                      = var.sentry_dns
         "USER_MODULE_URL"                 = "localhost:5008"
         "GENERATOR_MODULE_URL"            = "localhost:5002"
         "DOCUMENT_MODULE_URL"             = "localhost:5003"
@@ -60,6 +61,7 @@ module "ecs" {
         "REPLICATE_API_TOKEN" = var.repliate_api_token
         "SCRIBBLE_MODEL"      = var.scribble_model
         "BLIP_MODEL"          = var.blip_model
+        "N_PROMPT"            = var.negative_prompt
       }
     },
     {
