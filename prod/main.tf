@@ -45,9 +45,13 @@ module "k8s-config" {
   deployments = {
     "api-deployment" = {
       containers = {
+
         "api" = {
           image = "${var.registry_server}/sketch-blend-api-module:latest"
           port  = 3000
+
+
+
           env_variables = {
             "GOOGLE_CLIENT_ID"                = var.google_client_id
             "GOOGLE_CLIENT_SECRET"            = var.google_client_secret
@@ -55,6 +59,8 @@ module "k8s-config" {
             "GITHUB_CLIENT_SECRET"            = var.github_client_secret
             "AWS_ACCESS_KEY_ID_FOR_EMAIL"     = var.aws_access_key_for_email
             "AWS_SECRET_ACCESS_KEY_FOR_EMAIL" = var.aws_secret_access_key_for_email
+            "AWS_ACCESS_KEY_ID_FOR_S3"        = var.aws_access_key_for_s3
+            "AWS_SECRET_ACCESS_KEY_FOR_S3"    = var.aws_secret_access_key_for_s3
             "SENDER_EMAIL"                    = var.sender_email
             "SNS_TOPIC_ARN"                   = var.sns_topic_arn
             "DATABASE_URL"                    = var.mongodb_url
@@ -63,6 +69,9 @@ module "k8s-config" {
             "USER_MODULE_URL"                 = "user-service:5008"
             "GENERATOR_MODULE_URL"            = "generator-service:5002"
             "DOCUMENT_MODULE_URL"             = "document-service:5003"
+            "S3_IMAGE_BUCKET_NAME"            = "sketch-blend-images"
+            "IMAGES_URL"                      = var.images_url
+            "SENTRY_DNS"                      = var.sentry_dns
           }
         }
 
@@ -113,6 +122,7 @@ module "k8s-config" {
             "REPLICATE_API_TOKEN" = var.repliate_api_token
             "SCRIBBLE_MODEL"      = var.scribble_model
             "BLIP_MODEL"          = var.blip_model
+            "N_PROMPT"            = var.negative_prompt
           }
         }
       },

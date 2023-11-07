@@ -79,6 +79,16 @@ variable "aws_secret_access_key_for_email" {
   default = null
 }
 
+variable "aws_access_key_for_s3" {
+  type    = string
+  default = null
+}
+
+variable "aws_secret_access_key_for_s3" {
+  type    = string
+  default = null
+}
+
 variable "sender_email" {
   type    = string
   default = null
@@ -101,6 +111,10 @@ variable "portal_url" {
   type = string
 }
 
+variable "images_url" {
+  type = string
+}
+
 variable "github_username" {
   type    = string
   default = null
@@ -118,6 +132,15 @@ variable "scribble_model" {
 }
 
 variable "blip_model" {
+  type      = string
+  sensitive = true
+}
+
+variable "negative_prompt" {
+  type = string
+}
+
+variable "sentry_dns" {
   type      = string
   sensitive = true
 }

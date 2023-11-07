@@ -10,9 +10,13 @@ apply-prod:
 	cd prod && terraform apply
 apply-local:
 	cd local && terraform apply
+destroy-local:
+	cd local && terraform destroy --target module.k8s-config
 apply-local-password:
 	cd local && terraform apply -var registry_password=$(aws ecr get-login-password)
 minikube-start:
 	minikube start
+minikube-ingress:
+	minikube addons enable ingress
 minikube-tunnel:
 	minikube tunnel
