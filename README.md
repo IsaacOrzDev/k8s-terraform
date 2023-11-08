@@ -18,14 +18,14 @@ Local environment:
   - Run command: `make minikube-tunnel` to setup tunnel for ingress
   - Access the api with the domain: `http://localhost/docs`
 
-Dev environment:
+Staging environment:
 
 - Running application and services in AWS ECS
 - Setup:
   - Run command: `make apply-dev` to setup ecs and services
   - Access the api with the domain: `https://sketch-blend-api.isaacdev.net/docs`
 
-Prod environment:
+Production environment:
 
 - Running application and services in Kubernetes with AWS EKS
 - Setup:
