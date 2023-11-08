@@ -32,6 +32,34 @@ resource "kubernetes_deployment" "deployment" {
 
             image_pull_policy = try(container.image_pull_policy, "Always")
 
+            dynamic "liveness_probe" {
+              for_each = container.value.liveness_probe != null ? [container.value.liveness_probe] : []
+
+              content {
+                dynamic "http_get" {
+                  for_each = liveness_probe.value.http_get != null ? [liveness_probe.value.http_get] : []
+
+                  content {
+                    path = try(http_get.value.path, "/")
+                    port = try(container.value.port, 80)
+                  }
+                }
+
+                dynamic "grpc" {
+                  for_each = liveness_probe.value.grpc != null ? [liveness_probe.value.grpc] : []
+
+                  content {
+                    port = try(container.value.port, 80)
+                  }
+                }
+
+                initial_delay_seconds = liveness_probe.value.initial_delay_seconds != null ? liveness_probe.value.initial_delay_seconds : 30
+                period_seconds        = 10
+                timeout_seconds       = 5
+                failure_threshold     = 3
+              }
+            }
+
             dynamic "port" {
               for_each = container.value.port != null ? [container.value.port] : []
               content {

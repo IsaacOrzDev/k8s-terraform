@@ -17,8 +17,14 @@ module "k8s-config" {
           image = "${var.registry_server}/sketch-blend-api-module:latest"
           port  = 3000
           resources = {
-            cpu    = ["200m", "800m"]
+            cpu    = ["200m", "1200m"]
             memory = ["300Mi", "1024Mi"]
+          }
+
+          liveness_probe = {
+            http_get = {
+              path = "/"
+            }
           }
 
 
@@ -57,8 +63,11 @@ module "k8s-config" {
         "user" = {
           image = "${var.registry_server}/sketch-blend-user-module:latest"
           port  = 5008
+          liveness_probe = {
+            grpc = {}
+          }
           resources = {
-            cpu    = ["200m", "2000m"]
+            cpu    = ["200m", "800m"]
             memory = ["300Mi", "1024Mi"]
           }
           env_variables = {
@@ -77,6 +86,9 @@ module "k8s-config" {
         "document" = {
           image = "${var.registry_server}/sketch-blend-document-module:latest"
           port  = 5003
+          liveness_probe = {
+            grpc = {}
+          }
           env_variables = {
             "DATABASE_URL" = var.mongodb_url
           }
@@ -92,6 +104,10 @@ module "k8s-config" {
         "generator" = {
           image = "${var.registry_server}/sketch-blend-generator-module:latest"
           port  = 5002
+          liveness_probe = {
+            grpc = {}
+          }
+
           env_variables = {
             "PORT"                = 5002
             "REPLICATE_API_TOKEN" = var.repliate_api_token

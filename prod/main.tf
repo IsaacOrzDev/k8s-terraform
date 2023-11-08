@@ -49,8 +49,11 @@ module "k8s-config" {
         "api" = {
           image = "${var.registry_server}/sketch-blend-api-module:latest"
           port  = 3000
-
-
+          liveness_probe = {
+            http_get = {
+              path = "/"
+            }
+          }
 
           env_variables = {
             "GOOGLE_CLIENT_ID"                = var.google_client_id
@@ -86,6 +89,9 @@ module "k8s-config" {
         "user" = {
           image = "${var.registry_server}/sketch-blend-user-module:latest"
           port  = 5008
+          liveness_probe = {
+            grpc = {}
+          }
           env_variables = {
             "CONNECTION_STRING" = var.postgresql_connection_string
           }
@@ -102,6 +108,9 @@ module "k8s-config" {
         "document" = {
           image = "${var.registry_server}/sketch-blend-document-module:latest"
           port  = 5003
+          liveness_probe = {
+            grpc = {}
+          }
           env_variables = {
             "DATABASE_URL" = var.mongodb_url
           }
@@ -117,6 +126,9 @@ module "k8s-config" {
         "generator" = {
           image = "${var.registry_server}/sketch-blend-generator-module:latest"
           port  = 5002
+          liveness_probe = {
+            grpc = {}
+          }
           env_variables = {
             "PORT"                = 5002
             "REPLICATE_API_TOKEN" = var.repliate_api_token

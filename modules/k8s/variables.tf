@@ -30,6 +30,14 @@ variable "deployments" {
       port              = optional(number)
       port_protocol     = optional(string)
       env_variables     = optional(map(string))
+      liveness_probe = optional(object({
+        http_get = optional(object({
+          path = optional(string)
+        }))
+        grpc = optional(object({
+        }))
+        initial_delay_seconds = optional(number)
+      }))
     }))
     service = optional(object({
       name          = string
