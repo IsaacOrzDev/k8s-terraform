@@ -13,23 +13,23 @@ Local environment:
 
 - Running application and services in Kubernetes with minikube in local
 - Setup:
-  - Run command: ` make minikube-start` to start minikube
-  - Run command: ` make apply-local-password` to setup services and ingress
-  - Run command: ` make minikube-tunnel` to setup tunnel for ingress
+  - Run command: `make minikube-start` to start minikube
+  - Run command: `make apply-local-password` to setup services and ingress
+  - Run command: `make minikube-tunnel` to setup tunnel for ingress
   - Access the api with the domain: `http://localhost/docs`
 
 Dev environment:
 
 - Running application and services in AWS ECS
 - Setup:
-  - Run command: ` make apply-dev` to setup ecs and services
+  - Run command: `make apply-dev` to setup ecs and services
   - Access the api with the domain: `https://sketch-blend-api-dev.isaacdev.net/docs`
 
 Prod environment:
 
 - Running application and services in Kubernetes with AWS EKS
 - Setup:
-  - Run command: ` make apply-prod-eks` to setup eks and kube_system pods
-  - Run command: ` make config-prod` to add cluster config to kubectl
-  - Run command: ` make apply-prod-k8s` to setup services and ingress
+  - Run command: `make apply-prod-eks` to setup eks and kube_system pods
+  - Run command: `make config-prod` to add cluster config to kubectl
+  - Run command: `make apply-prod-k8s` to setup services and ingress
   - Access the api with the domain: `https://sketch-blend-api.isaacdev.net/docs`
