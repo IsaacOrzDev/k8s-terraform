@@ -9,7 +9,7 @@ module "ecs" {
 
 
   domain_name     = var.domain_name
-  sub_domain_name = "sketch-blend-api-dev"
+  sub_domain_name = "sketch-blend-api"
 
   cpu           = 256
   memory        = 512

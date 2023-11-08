@@ -23,7 +23,7 @@ Dev environment:
 - Running application and services in AWS ECS
 - Setup:
   - Run command: `make apply-dev` to setup ecs and services
-  - Access the api with the domain: `https://sketch-blend-api-dev.isaacdev.net/docs`
+  - Access the api with the domain: `https://sketch-blend-api.isaacdev.net/docs`
 
 Prod environment:
 
