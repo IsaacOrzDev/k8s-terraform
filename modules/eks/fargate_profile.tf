@@ -40,8 +40,10 @@ resource "aws_iam_openid_connect_provider" "eks" {
 }
 
 resource "aws_eks_fargate_profile" "prod" {
+  for_each = var.namespaces
+
   cluster_name           = aws_eks_cluster.cluster.name
-  fargate_profile_name   = var.namespace
+  fargate_profile_name   = each.value
   pod_execution_role_arn = aws_iam_role.eks-fargate-profile.arn
 
   subnet_ids = [
@@ -50,6 +52,6 @@ resource "aws_eks_fargate_profile" "prod" {
   ]
 
   selector {
-    namespace = var.namespace
+    namespace = each.value
   }
 }

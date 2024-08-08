@@ -12,13 +12,8 @@ variable "cluster_name" {
   description = "name to describe your eks cluster"
 }
 
-variable "namespace" {
-  type = string
-}
-
-variable "sub_domain_name" {
-  type    = string
-  default = null
+variable "namespaces" {
+  type = set(string)
 }
 
 variable "domain_name" {

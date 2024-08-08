@@ -5,8 +5,9 @@ data "aws_route53_zone" "public" {
 }
 
 resource "aws_acm_certificate" "api" {
-  domain_name       = "${var.sub_domain_name}.${var.domain_name}"
-  validation_method = "DNS"
+  domain_name               = var.domain_name
+  subject_alternative_names = ["*.${var.domain_name}"]
+  validation_method         = "DNS"
 
   # count = var.domain_name != null ? 1 : 0
 }

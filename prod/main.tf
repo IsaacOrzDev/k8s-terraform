@@ -1,7 +1,7 @@
 module "eks" {
   source       = "../modules/eks"
   region       = var.region
-  cluster_name = "sketch_blend"
+  cluster_name = "main-cluster"
 
   vpc = {
     cidr_block = "10.0.0.0/16"
@@ -17,9 +17,8 @@ module "eks" {
     }]
   }
 
-  namespace       = "sketch-blend"
-  sub_domain_name = "sketch-blend-api"
-  domain_name     = var.domain_name
+  namespaces  = ["sketch-blend"]
+  domain_name = var.domain_name
 }
 
 output "eks" {
@@ -28,7 +27,7 @@ output "eks" {
   }
 }
 
-module "k8s-config" {
+module "sketch-blend-k8s-config" {
   source = "../modules/k8s"
 
   cluster_config = {
@@ -159,3 +158,4 @@ module "k8s-config" {
 
   # ingress = null
 }
+

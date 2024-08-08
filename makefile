@@ -8,18 +8,18 @@ password:
 	aws ecr get-login-password
 apply-prod-eks:
 	cd prod && terraform apply --target module.eks
-apply-prod-k8s:
+apply-sketch-blend-k8s:
 	cd prod && terraform apply --target module.k8s-config
 config-prod:
-	aws eks update-kubeconfig --name sketch_blend --region us-west-1
+	aws eks update-kubeconfig --name main-cluster --region us-west-1
 destroy-prod-eks:
 	cd prod && terraform destroy --target module.eks
-destroy-prod-k8s:
-	cd prod && terraform destroy --target module.k8s-config
+destroy-sketch-blend-k8s:
+	cd prod && terraform destroy --target module.sketch-blend-k8s-config
 apply-local:
 	cd local && terraform apply
 destroy-local:
-	cd local && terraform destroy --target module.k8s-config
+	cd local && terraform destroy --target module.sketch-blend-k8s-config
 apply-local-password:
 	cd local && terraform apply -var registry_password=$(aws ecr get-login-password)
 minikube-start:
