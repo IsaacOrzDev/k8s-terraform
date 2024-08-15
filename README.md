@@ -1,11 +1,13 @@
-# Sketch Blend Terraform
+# K8s Terraform
 
 ![Terraform](https://img.shields.io/badge/terraform-%235835CC.svg?style=for-the-badge&logo=terraform&logoColor=white)
 ![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
 ![Kubernetes](https://img.shields.io/badge/kubernetes-%23326ce5.svg?style=for-the-badge&logo=kubernetes&logoColor=white)
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 
-This repo contains the Terraform code for the Sketch Blend project. It is used to create the EKS / ECS of AWS infrastructure and Kubernetes config for the project.
+This repo contains the Terraform code to setup Kubernetes to serve the following projects:.
+
+- Sketch Blend
 
 ## Getting Started
 
